@@ -1,0 +1,178 @@
+@import "../../variables";
+@import "../../media";
+
+.navBar {
+    display: flex;
+    align-items: center;
+    padding: 0.5em 1em;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: var(--nav-bg);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    *:not(svg){
+        @include media_md{
+            font-size: $mobile-font-size !important;
+        }
+    }
+
+
+    .links {
+        list-style: none;
+        display: flex;
+        gap: 1em;
+        font-size: 1.3rem;
+
+        @include media_md {
+            display: none;
+        }
+
+        a {
+            color: var(--text-color);
+            text-decoration: none;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+
+    .logo {
+        flex-shrink: 0;
+        width: 250px;
+        margin-right: auto;
+        cursor: pointer;
+
+        
+        img {
+            width: 100%;
+        }
+
+        @include media_md{
+            margin-right: 1em;
+        }
+
+        @include media_md {
+            width: 200px;
+           
+        }
+
+
+        @include media_sm {
+            width: 150px;
+           
+        }
+    }
+
+    svg {
+        font-size: 1.3rem;
+        cursor: pointer;
+        line-height: 0;
+        color: var(--text-color)
+    }
+
+
+
+    .theme {
+        margin-left: 1.5em !important;
+        line-height: 0;
+        .sunIcon {
+            color: $yellow-color;
+            filter: drop-shadow(1px 1px 8px $yellow-color);
+
+        }
+
+        
+
+        @include media_md{
+            display: none;
+        }
+    }
+
+
+
+    .menuIcon {
+        display: none;
+
+        @include media_md {
+            display: block;
+        }
+
+        margin-left: auto
+    }
+
+    .mobileLinks {
+        @extend .links;
+        position: absolute;
+        flex-direction: column;
+        padding: 0.5em;
+        background: var(--primary-color);
+        width: 200px;
+        top: calc(100% + 5px);
+        transition: all 200ms ease-in-out;
+        
+
+        @include media_md{
+           li{
+            margin: 10px 0;
+           }
+        }
+
+        .theme{
+            @extend .theme;
+            margin: 0 !important;
+            @include media_md{
+                display: block;
+            }
+
+        }
+
+        @include media_md {
+            display: block;
+        }
+
+    }
+
+    .searchBar {
+
+
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        width: 40%;
+        position: relative;
+
+        @include media_xxl{
+            margin-right: 1em;
+        }
+
+        @include media_md{
+            width: 100%;
+            margin-right: 0;
+            
+        }
+
+        input {
+            margin-left: auto;
+            background: transparent;
+            border: none;
+            outline: none;
+
+            font-size: 1.3rem;
+            color: var(--text-color);
+            transition: width 200ms ease-in;
+            padding-right: 1.5em;
+        }
+
+        svg {
+            flex-shrink: 0;
+            position: absolute;
+            right: 0;
+            margin-right: 0.25em;
+        }
+    }
+
+}

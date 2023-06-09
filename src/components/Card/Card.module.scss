@@ -1,0 +1,58 @@
+@import "../../variables";
+
+.card{
+    margin-inline: 4px;
+    border-radius: 8px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    overflow: hidden;
+    .cardImgContainer{
+        aspect-ratio: 3/4;
+        overflow: hidden;
+        position: relative;
+
+        img{
+            width: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .genres{
+            position: absolute;
+            z-index: 2;
+            bottom: 0.5em;
+            right: 0.5em;
+            display: flex;
+            gap: 0.25em;
+            flex-wrap: wrap;
+            width: 50%;
+            justify-content: flex-end;
+            font-size: calc(0.2vw + 12px);
+            color: $dark-color;
+            span{
+                background-color: $yellow-color;
+                padding: 0 0.5em;
+                border-radius: 0.25em;
+            }
+        }
+
+        .gradient{
+            height: 100px;
+            width: 100%;
+            background-image: var(--card-gradient-overlay);
+            position: absolute;
+            bottom: 0;
+            z-index: 1;
+        }
+    }
+
+    .cardDetails{
+        padding: 0.5em;
+        position: relative;
+
+        .name{
+            font-size: calc(0.2vw + 1rem);
+            text-transform: capitalize;
+        }
+    }
+}

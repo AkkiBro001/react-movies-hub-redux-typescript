@@ -1,0 +1,82 @@
+@use "./variables" as var;
+
+:root{
+    --primary-color: #242424;
+    --secondary-color: #363636;
+    --text-color: #dddddd;
+    --nav-bg: rgba(36,36,36,0.4);
+    --gradient-overlay: linear-gradient(0deg, rgba(54,54,54,1) 0%, rgba(54,54,54,0) 100%);
+    --card-gradient-overlay: linear-gradient(0deg, rgba(36,36,36,1) 0%, rgba(36,36,36,0) 100%);
+    --accent-color: #fa9f0c;
+    --card-shadow: "0px 0px 3px "
+}
+
+[data-theme="light"]{
+    --primary-color: #eeeeee;
+    --secondary-color: #dcdcdc;
+    --nav-bg: rgba(238,238,238,0.4);
+    --text-color: #242424;
+    --card-gradient-overlay: linear-gradient(0deg, rgba(238,238,238,1) 0%, rgba(238,238,238,0) 100%);
+    --gradient-overlay: linear-gradient(0deg, rgba(220,220,220,1) 0%, rgba(220,220,220,0) 100%);
+    --accent-color: #435269;
+}
+
+.nav-scroll{
+    background-color: var(--primary-color) !important;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: var.$font;
+    overflow-x: hidden;
+}
+
+
+.app{
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.app{
+    background: var(--secondary-color);
+}
+
+
+
+.activeLink{
+    opacity: 1;
+}
+
+.inactiveLink{
+    opacity: 0.7;
+}
+
+.showSearch{
+    width: 100%;
+    border-bottom: 1px solid var(--text-color) !important;
+    padding: 0.25em;
+
+}
+
+.hideSearch{
+    width: 0;
+    border: none;
+}
+
+.showMobileMenu{
+    right: 0;
+}
+
+.hideMobileMenu{
+    right: -200px;
+}
