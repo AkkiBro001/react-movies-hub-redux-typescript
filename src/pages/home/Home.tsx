@@ -1,12 +1,14 @@
 import { useEffect } from "react"
 import HeroBanner from "../heroBanner/HeroBanner"
 import fetchDataFromAPI from "../../utils/API"
-import { getAPIConfiguration } from "../../store/HomeSlice"
+import { getAPIConfiguration, getGenres } from "../../store/HomeSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/Store";
 import { ConfigurationAPI } from "../../constants/TypeGuards";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import Popular from "./Popular";
+import TopRated from "./TopRated";
+import Trending from "./Trending";
 
 
 
@@ -29,7 +31,8 @@ function Home() {
       dispatch(getAPIConfiguration(res.images))
     })
    
-    
+    fetchDataFromAPI(`genre/movie/list`).then(res => dispatch(getGenres(res.genres)))
+    fetchDataFromAPI(`genre/tv/list`).then(res => dispatch(getGenres(res.genres)))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -41,7 +44,9 @@ function Home() {
     <HeroBanner/>
     <ContentWrapper>
         <Popular/>
-        
+        <TopRated/>
+        <Trending category="movie"/>
+        <Trending category="tv"/>
     </ContentWrapper>
     </>
   )

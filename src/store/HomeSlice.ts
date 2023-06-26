@@ -14,7 +14,12 @@ const HomeSlice = createSlice({
             state.url = action.payload
         },
         getGenres: (state, action) =>{
-            state.genres = action.payload
+            if(state.genres.length === 1){
+
+                state.genres = action.payload
+            }else{
+                state.genres = [...new Set([...state.genres, ...action.payload])]
+            }
         },
     }
 })

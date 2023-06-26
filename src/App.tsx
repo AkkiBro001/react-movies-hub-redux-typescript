@@ -4,6 +4,7 @@ import Home from "./pages/home/Home"
 import { Provider } from "react-redux"
 import { store } from "./store/Store"
 import Search from "./pages/search/Search"
+import Footer from "./components/footer/Footer"
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
 
         </BrowserRouter>
       </div>
+        <Footer/>
     </Provider>
   )
 }

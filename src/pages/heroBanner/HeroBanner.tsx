@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ConfigurationAPI, ListsAPI } from '../../constants/TypeGuards';
 import { RootState } from '../../store/Store';
-import useFetch from '../../hooks/useFetch'
+import useFetch from '../../hooks/useFetch';
+import HeroPreview from "../../assets/hero-preview.jpg"
 
 function HeroBanner() {
 
@@ -38,7 +39,7 @@ function HeroBanner() {
 
   return (
     <div className={styles.heroBannerContainer}>
-        <img src={backdrop} alt="backdrop" className={styles.backdropImg}/>
+        <img src={backdrop ? backdrop : HeroPreview} alt="backdrop" className={styles.backdropImg}/>
         <h3 className={styles.title}>Millions of movies, TV shows and people to discover. Explore now.</h3>
         <form className={styles.serachContainer} onSubmit={(e)=>handleSearch(e)}>
             <input type="text" placeholder="search movies and shows....."

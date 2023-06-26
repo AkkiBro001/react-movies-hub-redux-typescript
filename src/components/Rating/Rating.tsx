@@ -9,7 +9,7 @@ function Rating({rating}:{rating:number}) {
       <CircularProgressbar
         value={rating}
         maxValue={10}
-        text={`${rating}`}
+        text={`${rating.toFixed(1)}`}
         strokeWidth={8}
         styles={buildStyles({
           // Colors

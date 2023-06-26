@@ -4,7 +4,7 @@ import Rating from "../Rating/Rating";
 import { Genres } from "../../constants/TypeGuards";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/Store";
-
+import NoPoster from "../../assets/no-poster.png"
 
 
 interface Props {
@@ -30,7 +30,7 @@ const getGenres = genre_ids.map(id => genres.find(val => val.id === id)?.name).s
 
      <div className={styles.card}>
         <header className={styles.cardImgContainer}>
-            <LazyLoadImg src={imgURL} className=""/>
+            <LazyLoadImg src={imgURL ? imgURL : NoPoster} className=""/>
             <div className={styles.genres}>
                 {getGenres.map((genres, id) => <span key={id}>{genres}</span>)}
             </div>
