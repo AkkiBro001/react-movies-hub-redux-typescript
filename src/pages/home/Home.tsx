@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import HeroBanner from "../heroBanner/HeroBanner"
 import fetchDataFromAPI from "../../utils/API"
-import { getAPIConfiguration, getGenres } from "../../store/HomeSlice"
+import { getAPIConfiguration } from "../../store/HomeSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/Store";
 import { ConfigurationAPI } from "../../constants/TypeGuards";
