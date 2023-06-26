@@ -4,7 +4,10 @@ const HomeSlice = createSlice({
     name: 'home',
     initialState: {
         url: {},
-        genres: {}
+        genres: [{
+            id: 0,
+            name: "",
+        }]
     },
     reducers: {
         getAPIConfiguration: (state, action) =>{

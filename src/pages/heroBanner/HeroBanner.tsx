@@ -24,6 +24,7 @@ function HeroBanner() {
   }
   const base_url:string = (url as ConfigurationAPI).secure_base_url + "original";
 
+  
   useEffect(()=>{
     if(data && (data as ListsAPI)?.results){
         const bg = base_url + (data as ListsAPI).results[Math.floor(Math.random() * 20)].backdrop_path;
@@ -38,7 +39,7 @@ function HeroBanner() {
   return (
     <div className={styles.heroBannerContainer}>
         <img src={backdrop} alt="backdrop" className={styles.backdropImg}/>
-        <h3 className={styles.title}>Watch Millions of Movies and Shows</h3>
+        <h3 className={styles.title}>Millions of movies, TV shows and people to discover. Explore now.</h3>
         <form className={styles.serachContainer} onSubmit={(e)=>handleSearch(e)}>
             <input type="text" placeholder="search movies and shows....."
             onChange={(e)=>setQuery(e.target.value)}

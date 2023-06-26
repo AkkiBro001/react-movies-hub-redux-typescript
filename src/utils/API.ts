@@ -14,6 +14,7 @@ const headers: Headers = {
 }
 
 export default async function fetchDataFromAPI (url:string, params?:string){
+  
    try{
      const {data} = await axios.get(BASE_URL + url, {
         headers,

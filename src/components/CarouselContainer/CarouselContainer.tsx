@@ -1,21 +1,47 @@
+import {Dispatch, SetStateAction} from 'react';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import styles from "./CarouselContainer.module.scss"
 import Card from "../Card/Card";
+import ToggleButton from "../toggleButton/ToggleButton";
+import { ConfigurationAPI, ListsAPI } from "../../constants/TypeGuards";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/Store";
+import Skeleton from '../skeleton/Skeleton';
 
-function CarouselContainer(){
+interface Props {
+  header: string,
+  toggle: string[]
+  loading: boolean,
+  data: ListsAPI,
+  setSwitchToggle: Dispatch<SetStateAction<string>>,
+}
+
+function CarouselContainer({header, toggle, loading, data, setSwitchToggle}: Props){
+  
+
+const {url}:{url:ConfigurationAPI | object} = useSelector((state: RootState) => state.home);
+
+
+
+
 
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
-    breakpoint: { max: 1920, min: 1440 },
+    breakpoint: { max: 4000, min: 1440 },
     items: 6,
     slidesToSlide: 6
   },
-  desktop: {
-    breakpoint: { max: 1440, min: 786 },
+  largeDesktop: {
+    breakpoint: { max: 1440, min: 1170 },
     items: 5,
     slidesToSlide: 5
+  },
+  desktop: {
+    breakpoint: { max: 1170, min: 786 },
+    items: 4,
+    slidesToSlide: 4
   },
   tablet: {
     breakpoint: { max: 786, min: 550 },
@@ -28,35 +54,44 @@ const responsive = {
     slidesToSlide: 3
   }
 };
+
+
 return (
 <div className={styles.carouselContainer}>
   <header>
-    <h2>Populer</h2>
+    <h2>{header}</h2>
+    <ToggleButton toggle={toggle} setSwitchToggle={setSwitchToggle}/>
   </header>
 <Carousel 
 responsive={responsive}
 removeArrowOnDeviceType={["tablet", "mobile"]}
 >
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
-  <Card/>
+  
+  {
+    
+    loading ? 
+    (
+    <>
+    <Skeleton/>
+    <Skeleton/>
+    <Skeleton/>
+    <Skeleton/>
+    <Skeleton/>
+    <Skeleton/>
+    <Skeleton/>
+    <Skeleton/>
+    <Skeleton/>
+    <Skeleton/>
+    </>
+    ) 
+    : 
+    ( data?.results?.map(list => {
+      const img = (url as ConfigurationAPI).secure_base_url + "original" + list.poster_path
+    return <Card key={list.id}  imgURL={img} title={(list.title || list.name) as string} rating={list.vote_average} genre_ids={list.genre_ids}/>
+  }))
+  }
+  
+  
   
   
 </Carousel>

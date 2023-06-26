@@ -1,25 +1,48 @@
-import styles from "./Card.module.scss"
-import LazyLoadImg from "../lazyLoadImg/LazyLoadImg"
-import Rating from "../Rating/Rating"
+import styles from "./Card.module.scss";
+import LazyLoadImg from "../lazyLoadImg/LazyLoadImg";
+import Rating from "../Rating/Rating";
+import { Genres } from "../../constants/TypeGuards";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/Store";
 
-function Card() {
+
+
+interface Props {
+    imgURL: string,
+    title: string,
+    rating: number,
+    genre_ids: number[]
+}
+
+
+
+
+
+function Card({imgURL, title, rating, genre_ids}: Props) {
+const genres: Genres[] = useSelector((state: RootState) => state.home.genres)
+const getGenres = genre_ids.map(id => genres.find(val => val.id === id)?.name).slice(0,3)
+
+    
+ 
+
   return (
-    <div className={styles.card}>
+    
+
+     <div className={styles.card}>
         <header className={styles.cardImgContainer}>
-            <LazyLoadImg src="https://marketplace.canva.com/EAFMqwkPfOY/2/0/1131w/canva-black-minimalist-horror-movie-poster-3bttgZhMDnA.jpg" className=""/>
+            <LazyLoadImg src={imgURL} className=""/>
             <div className={styles.genres}>
-                <span>Action</span>
-                <span>Drama</span>
-                <span>Adventure</span>
+                {getGenres.map((genres, id) => <span key={id}>{genres}</span>)}
             </div>
             <div className={styles.gradient}></div>
         </header>
+        <Rating rating={rating}/>
         <footer className={styles.cardDetails}>
-            <Rating/>
             
-            <span className={styles.name}>Spider Man: No way home</span>
+            <span className={styles.name}>{title}</span>
         </footer>
     </div>
+    
   )
 }
 

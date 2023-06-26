@@ -33,3 +33,9 @@
         @content;
     }
 }
+
+@mixin media_custom($size){
+    @media screen and (max-width: $size){
+        @content;
+    }
+}

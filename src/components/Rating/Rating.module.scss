@@ -1,17 +1,26 @@
+@import "../../media";
+
 .rating{
     width: 40px;
     height: 40px;
     position: absolute;
-    top: -50px;
+    top: 25px;
+    left: 10px;
     flex-shrink: 0;
     z-index: 3;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1;
-
+    color: #f6f6f6;
     svg{
         line-height: 0;
+    }
+
+    @include media_sm{
+        // display: none;
+        width: 30px;
+        height: 30px;
     }
     
 }
@@ -19,8 +28,7 @@
 .rating::before{
     content: '';
     position: absolute;
-    
-    background: #fff;
+    background: #242424;
     border-radius: 50%;
     z-index: -1;
     top: -1px;

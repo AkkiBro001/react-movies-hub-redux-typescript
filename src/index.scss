@@ -7,18 +7,27 @@
     --nav-bg: rgba(36,36,36,0.4);
     --gradient-overlay: linear-gradient(0deg, rgba(54,54,54,1) 0%, rgba(54,54,54,0) 100%);
     --card-gradient-overlay: linear-gradient(0deg, rgba(36,36,36,1) 0%, rgba(36,36,36,0) 100%);
+    --transprent-gradient: rgba(221,221,221,0.4);
     --accent-color: #fa9f0c;
-    --card-shadow: "0px 0px 3px "
+    --genres-bg: #fa9f0c;
+    --genres-text: #242424;
+    --card-shadow: rgba(0,0,0,0.3);
+    --rate-bg: rgba(255,255,255,0.6);
 }
 
 [data-theme="light"]{
     --primary-color: #eeeeee;
-    --secondary-color: #dcdcdc;
+    --secondary-color: #cfcfcf;
     --nav-bg: rgba(238,238,238,0.4);
     --text-color: #242424;
     --card-gradient-overlay: linear-gradient(0deg, rgba(238,238,238,1) 0%, rgba(238,238,238,0) 100%);
-    --gradient-overlay: linear-gradient(0deg, rgba(220,220,220,1) 0%, rgba(220,220,220,0) 100%);
+    --gradient-overlay: linear-gradient(0deg, rgba(207,207,207,1) 0%, rgba(207,207,207,0) 100%);
+    --transprent-gradient: rgba(36,36,36,0.4);
     --accent-color: #435269;
+    --genres-bg: #242424;
+    --genres-text: #dddddd;
+    --card-shadow: rgba(0,0,0,0.3);
+    --rate-bg: rgba(255,255,255,0.4);
 }
 
 .nav-scroll{
