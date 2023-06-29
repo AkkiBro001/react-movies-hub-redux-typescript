@@ -5,7 +5,7 @@ import { Provider } from "react-redux"
 import { store } from "./store/Store"
 import Search from "./pages/search/Search"
 import Footer from "./components/footer/Footer"
-
+import Collection from "./pages/collection/Collection"
 
 function App() {
 
@@ -18,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search/:query" element={<Search />} />
+            <Route path="/collection/:type" element={<Collection />} />
           </Routes>
 
         </BrowserRouter>

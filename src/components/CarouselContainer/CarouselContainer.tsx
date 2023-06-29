@@ -25,7 +25,6 @@ const {url}:{url:ConfigurationAPI | object} = useSelector((state: RootState) => 
 
 
 
-
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.

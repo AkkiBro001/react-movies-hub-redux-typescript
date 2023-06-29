@@ -33,6 +33,10 @@
         overflow: hidden;
         position: relative;
 
+        @include media_sm{
+            aspect-ratio: 3/3.5;
+        }
+
         img{
             
             width: 100%;

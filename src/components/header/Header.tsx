@@ -72,8 +72,8 @@ function Header() {
       </div>
 
       <ul className={styles.links}>
-        <li><Link to="./movies" className={`inactiveLink`}>Movies</Link></li>
-        <li><Link to="./shows" className={`inactiveLink`}>Shows</Link></li>
+        <li><Link to="./collection/movies" className={`inactiveLink`}>Movies</Link></li>
+        <li><Link to="./collection/shows" className={`inactiveLink`}>Shows</Link></li>
       </ul>
       <div className={styles.theme} style={{ margin: "0 0.75em" }}>
         {theme ? <BsFillSunFill className={styles.sunIcon} onClick={() => dispatch(setTheme(false))} /> :
@@ -90,10 +90,10 @@ function Header() {
 
 
       <ul className={`${styles.mobileLinks} ${showMobileMenu ? 'showMobileMenu' : 'hideMobileMenu'}`}>
-        <li><Link to="./movies" className="inactiveLink">Movies</Link></li>
-        <li><Link to="./shows" className="inactiveLink">Shows</Link></li>
-        <li className={styles.theme}>{theme ? <BsFillSunFill className={styles.sunIcon} onClick={() => dispatch(setTheme(false))} />:
-          <BsFillMoonFill className={styles.moonIcon} onClick={() => dispatch(setTheme(true))} />}</li>
+        <li><Link to="./collection/movies" className="inactiveLink" onClick={()=>SetShowMobileMenu(false)}>Movies</Link></li>
+        <li><Link to="./collection/shows" className="inactiveLink" onClick={()=>SetShowMobileMenu(false)}>Shows</Link></li>
+        <li className={styles.theme}>{theme ? <BsFillSunFill className={styles.sunIcon} onClick={() => {dispatch(setTheme(false)); SetShowMobileMenu(false)}} />:
+          <BsFillMoonFill className={styles.moonIcon} onClick={() => {dispatch(setTheme(true)); SetShowMobileMenu(false)}} />}</li>
       </ul>
 
     </nav>

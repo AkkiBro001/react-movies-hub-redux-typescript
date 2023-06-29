@@ -1,4 +1,5 @@
 @use "./variables" as var;
+@import "./media";
 
 :root{
     --primary-color: #242424;
@@ -52,7 +53,7 @@ body{
 
 .app{
     width: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 40px);
     overflow: hidden;
 }
 
@@ -88,4 +89,52 @@ body{
 
 .hideMobileMenu{
     right: -200px;
+}
+
+
+.collectionCard{
+    width: calc(((1168px - 64px) / 6)) !important;
+    // min-width: 100px !important;
+    aspect-ratio: 2/3;
+    margin-block: 0.25em !important;
+
+    @include media_lg{
+        width: calc(((100vw - 72px) / 5)) !important;
+    }
+
+    @include media_md{
+        width: calc(((100vw - 64px) / 3)) !important;
+    }
+
+    
+
+
+}
+
+.collectionCardImg{
+    aspect-ratio: 3/3.8 !important;
+    @include media_md{
+    aspect-ratio: 3/3.9 !important;
+    }
+    @include media_sm{
+        aspect-ratio: 3/3.7 !important;
+    }
+
+    @include media_xs{
+        aspect-ratio: 3/3.5 !important;
+    }
+}
+
+.collectionGenres{
+            display: flex !important;
+
+            @include media_sm{
+                font-size: calc(0.10vw + 10.5px) !important;
+            }
+
+            span{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
 }
