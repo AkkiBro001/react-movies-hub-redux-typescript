@@ -13,7 +13,7 @@ const headers: Headers = {
     Authorization: "bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYWYxOGQ2NTk2MTEwMWJhODQ4ZDU0MDcyZmRlMjZlOSIsInN1YiI6IjY0N2Q3N2Q0MGZiMzk4MDExODBlNGRiMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.rmtEczOoP1DRoht9xrGcsP9AiXXm7WK6PjNXhHs3BVs",
 }
 
-export default async function fetchDataFromAPI (url:string, params?:string){
+export default async function fetchDataFromAPI (url:string, params?:object){
   
    try{
      const {data} = await axios.get(BASE_URL + url, {

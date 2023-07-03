@@ -8,6 +8,7 @@ import { ConfigurationAPI, ListsAPI } from "../../constants/TypeGuards";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/Store";
 import Skeleton from '../skeleton/Skeleton';
+import NoPoster from "../../assets/no-poster.png";
 
 interface Props {
   header: string,
@@ -85,7 +86,7 @@ removeArrowOnDeviceType={["tablet", "mobile"]}
     ) 
     : 
     ( data?.results?.map(list => {
-      const img = (url as ConfigurationAPI).secure_base_url + "original" + list.poster_path
+      const img = list.poster_path ? (url as ConfigurationAPI).secure_base_url + "original" + list.poster_path : NoPoster;
     return <Card key={list.id}  imgURL={img} title={(list.title || list.name) as string} rating={list.vote_average} genre_ids={list.genre_ids}/>
   }))
   }

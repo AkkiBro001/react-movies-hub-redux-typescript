@@ -30,7 +30,7 @@ function HeroBanner() {
     if(data && (data as ListsAPI)?.results){
         const bg = base_url + (data as ListsAPI).results[Math.floor(Math.random() * 20)].backdrop_path;
         
-        setBackDrop(bg);
+        setBackDrop(bg ? bg : HeroPreview);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
@@ -39,7 +39,7 @@ function HeroBanner() {
 
   return (
     <div className={styles.heroBannerContainer}>
-        <img src={backdrop ? backdrop : HeroPreview} alt="backdrop" className={styles.backdropImg}/>
+        <img src={backdrop} alt="backdrop" className={styles.backdropImg}/>
         <h3 className={styles.title}>Millions of movies, TV shows and people to discover. Explore now.</h3>
         <form className={styles.serachContainer} onSubmit={(e)=>handleSearch(e)}>
             <input type="text" placeholder="search movies and shows....."

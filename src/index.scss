@@ -93,7 +93,7 @@ body{
 
 
 .collectionCard{
-    width: calc(((1168px - 64px) / 6)) !important;
+    width: calc(((1168px - 48px) / 6)) !important;
     // min-width: 100px !important;
     aspect-ratio: 2/3;
     margin-block: 0.25em !important;
@@ -103,7 +103,7 @@ body{
     }
 
     @include media_md{
-        width: calc(((100vw - 64px) / 3)) !important;
+        width: calc(((100vw - 56px) / 3)) !important;
     }
 
     
@@ -137,4 +137,23 @@ body{
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
+}
+
+.react-select-container {
+    .react-select__control{
+
+        background-color: var(--primary-color);
+    }
+
+    .react-select__menu{
+        background-color: var(--primary-color);
+        color: var(--text-color);
+
+
+    }
+
+    .react-select__single-value {
+        color: var(--text-color);
+    }
+        
 }

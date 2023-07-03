@@ -7,8 +7,10 @@ import Search from "./pages/search/Search"
 import Footer from "./components/footer/Footer"
 import Collection from "./pages/collection/Collection"
 
+
 function App() {
 
+  
 
   return (
     <Provider store={store}>

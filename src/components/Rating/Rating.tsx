@@ -3,7 +3,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import styles from "./Rating.module.scss"
 function Rating({rating}:{rating:number}) {
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-  if(!rating) return null
+  // if(!rating) return null
   return (
     <div className={styles.rating}>
       <CircularProgressbar

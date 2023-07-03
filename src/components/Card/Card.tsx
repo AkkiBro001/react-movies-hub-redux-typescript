@@ -4,7 +4,7 @@ import Rating from "../Rating/Rating";
 import { Genres } from "../../constants/TypeGuards";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/Store";
-import NoPoster from "../../assets/no-poster.png"
+
 import { useParams } from "react-router-dom";
 
 
@@ -32,7 +32,7 @@ const getGenres = (genre_ids).map(id => genres.find(val => val.id === id)?.name)
 
      <div className={`${styles.card} ${clsName ? clsName : ""}`}>
         <header className={`${styles.cardImgContainer} ${type ? "collectionCardImg" : ""}`} >
-            <LazyLoadImg src={imgURL ? imgURL : NoPoster} className=""/>
+            <LazyLoadImg src={imgURL} className=""/>
             <div className={`${styles.genres} ${type ? "collectionGenres" : ""}`}>
                 {getGenres.map((genres, id) => <span key={id}>{genres}</span>)}
             </div>
