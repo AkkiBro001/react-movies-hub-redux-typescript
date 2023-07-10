@@ -1,7 +1,7 @@
 import styles from "./Collection.module.scss";
 import useFetch from "../../hooks/useFetch";
 import Card from "../../components/Card/Card";
-import { ConfigurationAPI, Genres } from "../../constants/TypeGuards";
+import { AllGenres, ConfigurationAPI, Genres } from "../../constants/TypeGuards";
 import { RootState } from "../../store/Store";
 import { useSelector } from "react-redux";
 import { ListsAPI } from "../../constants/TypeGuards"
@@ -12,7 +12,7 @@ import { SelectOption } from "../../constants/TypeGuards";
 import InfiniteScroll from "react-infinite-scroll-component";
 import fetchDataFromAPI from "../../utils/API";
 import NoPoster from "../../assets/no-poster.png"
-
+import { useErrorBoundary } from "react-error-boundary"
 
 
 
@@ -29,7 +29,9 @@ interface Filters {
   with_genres: string
 }
 
-
+interface SelectedItems {
+   value: string, label: string 
+}
 
 function Collection() {
 
@@ -39,7 +41,7 @@ function Collection() {
   const [sortBy, setSortBy] = useState<null | SelectOption>(null)
   const [genresOpt, setGenresOpt] = useState<SelectOption[]>([])
   const filters = useRef({})
-
+  const { showBoundary } = useErrorBoundary();
 
 
 
@@ -60,7 +62,7 @@ function Collection() {
   const { data: genres } = useFetch(`genre/${filterType}/list`)
   const { url }: { url: ConfigurationAPI | object } = useSelector((state: RootState) => state.home);
   if (!genres) return null;
-  const genresOption = (genres?.genres as unknown as Genres[]).map(g => ({ value: g.name, label: g.name }))
+  const genresOption = ((genres as AllGenres)?.genres as Genres[]).map(g => ({ value: g.name, label: g.name }))
 
 
   function fetchInitialData() {
@@ -69,7 +71,7 @@ function Collection() {
       .then(res => {
         setData(res)
         setPage((prev) => prev + 1)
-      })
+      }).catch((err) => showBoundary(err))
   }
 
   function fetchMoreData() {
@@ -87,10 +89,12 @@ function Collection() {
         }
         setPage((prev) => prev + 1);
       }
-      )
+      ).catch((err) => showBoundary(err))
 
 
   }
+
+
 
   const onChange = (selectedItems: { value: string, label: string }, action: { action: string, option: unknown, name: unknown }) => {
     if (action.name === "sortby") {
@@ -113,7 +117,7 @@ function Collection() {
       setGenresOpt(selectedItems as unknown as SelectOption[]);
       if (action.action !== "clear") {
         
-        let genreId = selectedItems?.map((g:SelectOption) => genres.genres.find(v => v.name === g.value).id);
+        let genreId: (number[] | string)  = (selectedItems as unknown as SelectedItems[])?.map((g:SelectOption) => (genres?.genres as Genres[]).find(v => v.name === g.value)?.id) as number[];
         
         genreId = JSON.stringify(genreId).slice(1, -1);
         (filters.current as Partial<Filters>).with_genres = genreId;
@@ -125,6 +129,9 @@ function Collection() {
     setPage(1);
     fetchInitialData();
   }
+
+
+  
 
   return (
     <section className={styles.collectionContainer}>
@@ -175,6 +182,7 @@ function Collection() {
       </header>
       {(data as unknown as ListsAPI)?.total_pages > 0 ?
         <InfiniteScroll
+          loader=""
           dataLength={page * 10}
           next={fetchMoreData}
           className={styles.collection}
@@ -184,7 +192,16 @@ function Collection() {
             (data as unknown as ListsAPI)?.results?.map(list => {
               const img = list.poster_path ? ((url as ConfigurationAPI).secure_base_url || "https://image.tmdb.org/t/p/") + "original" + list.poster_path : NoPoster;
 
-              return <Card key={list.id} imgURL={img} title={(list.title || list.name) as string} rating={list.vote_average} genre_ids={list.genre_ids} clsName="collectionCard" />
+              return <Card 
+              key={list.id} 
+              imgURL={img} 
+              title={(list.title || list.name) as string} 
+              rating={list.vote_average} 
+              genre_ids={list.genre_ids} 
+              clsName="collectionCard" 
+              id={list.id}
+              mediaType={filterType}
+              />
             })
           }
 

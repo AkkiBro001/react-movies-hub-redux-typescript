@@ -1,0 +1,74 @@
+@import "../../media";
+
+.topCastContainer{
+    margin: 1em 0 2em;
+    header{
+        color: var(--text-color);
+        margin-bottom: 0.5em;
+    }
+
+
+    .cast{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 150px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        @include media_sm{
+            width: 100px;
+            
+        }
+
+        .profilePic{
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 1em;
+
+            @include media_sm{
+                width: 100px;
+                height: 100px;
+            }
+
+           
+
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .realName{
+            font-weight: 700;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: inherit;
+            @include media_md{
+                font-size: 0.85rem
+            };
+        }
+
+        .reelName{
+            color: var(--text-color);
+            opacity: 0.6;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            align-self: flex-start;
+            width: inherit;
+
+            @include media_md{
+                font-size: 0.7  5rem
+            };
+        }
+
+    }
+}

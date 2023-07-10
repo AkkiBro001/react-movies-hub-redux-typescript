@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/Store";
 import Skeleton from '../skeleton/Skeleton';
 import NoPoster from "../../assets/no-poster.png";
+import { useParams } from 'react-router-dom';
+
 
 interface Props {
   header: string,
@@ -16,15 +18,19 @@ interface Props {
   loading: boolean,
   data: ListsAPI,
   setSwitchToggle: Dispatch<SetStateAction<string>>,
+  switchToggle?: string
 }
 
-function CarouselContainer({header, toggle, loading, data, setSwitchToggle}: Props){
+function CarouselContainer({header, toggle, loading, data, setSwitchToggle, switchToggle}: Props){
+
+
+
   
 
 const {url}:{url:ConfigurationAPI | object} = useSelector((state: RootState) => state.home);
+const params = useParams()
 
-
-
+const isDetailPage = params.type && params.id
 
 const responsive = {
   superLargeDesktop: {
@@ -60,7 +66,7 @@ return (
 <div className={styles.carouselContainer}>
   <header>
     <h2>{header}</h2>
-    <ToggleButton toggle={toggle} setSwitchToggle={setSwitchToggle}/>
+    {!isDetailPage && <ToggleButton toggle={toggle} setSwitchToggle={setSwitchToggle}/>}
   </header>
 <Carousel 
 responsive={responsive}
@@ -87,7 +93,15 @@ removeArrowOnDeviceType={["tablet", "mobile"]}
     : 
     ( data?.results?.map(list => {
       const img = list.poster_path ? (url as ConfigurationAPI).secure_base_url + "original" + list.poster_path : NoPoster;
-    return <Card key={list.id}  imgURL={img} title={(list.title || list.name) as string} rating={list.vote_average} genre_ids={list.genre_ids}/>
+    return <Card 
+    key={list.id}  
+    imgURL={img} 
+    title={(list.title || list.name) as string} 
+    rating={list.vote_average} 
+    genre_ids={list.genre_ids}
+    mediaType={switchToggle}
+    id={list.id}
+    />
   }))
   }
   

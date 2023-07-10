@@ -29,6 +29,7 @@ export interface DetailsAPI{
     video: boolean,
     vote_average: number,
     vote_count: number
+    media_type?: string,
 }
 
 export interface ListsAPI {
@@ -53,4 +54,40 @@ export interface Genres{
 export interface SelectOption{
     value: string,
     label: string
+}
+
+export interface AllGenres{
+    genres: Genres[]
+
+}
+
+export interface DeatilPageAPI{
+    backdrop_path: string,
+    genres: Genres[],
+    id: number,
+    original_title: string,
+    overview: string,
+    poster_path: string,
+    release_date: string,
+    status: string,
+    tagline: string,
+    vote_average: number,
+    runtime: number,
+    original_name?: string
+    episode_run_time: number[]
+}
+
+export interface CastObj{
+adult: boolean
+cast_id: number
+character: string
+credit_id: string
+gender: number
+id: number
+known_for_department: string
+name: string
+order: number
+original_name: string
+popularity: number
+profile_path: string
 }

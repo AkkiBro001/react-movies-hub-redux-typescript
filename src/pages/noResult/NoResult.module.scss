@@ -1,0 +1,34 @@
+@import "../../media";
+
+.noResultContainer{
+    display: flex;
+    min-height: calc(100vh - 82.58px);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    @include media_sm{
+        min-height: calc(100vh - 34.34px);
+    }
+
+    h1{
+        color: var(--text-color);
+        margin: 0.25em 0 0.5em;
+
+        @include media_md{
+            font-size: 1.6rem;
+        }
+    }
+
+    img{
+        width: 300px;
+
+        @include media_md{
+            width: 250px;
+        }
+    }
+
+    a{
+        color: var(--text-color);
+    }
+}

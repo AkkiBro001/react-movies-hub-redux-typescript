@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import fetchDataFromAPI from '../utils/API';
+import { useErrorBoundary } from "react-error-boundary";
 
 function useFetch(url: string) {
     const [data, setData] = useState(null)
     const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<string>("")
     
+    const showBoundary = useErrorBoundary()
     
     useEffect(() => {
 
@@ -21,12 +22,12 @@ function useFetch(url: string) {
                 })
         }catch(err){
             setLoading(true)
-            setError("Something went wrong !!!!")
+            showBoundary(err)
         }
     
   }, [url])
 
-    return {data, loading, error}
+    return {data, loading}
 }
 
 export default useFetch

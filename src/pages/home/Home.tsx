@@ -9,7 +9,7 @@ import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import Popular from "./Popular";
 import TopRated from "./TopRated";
 import Trending from "./Trending";
-
+import { useErrorBoundary  } from "react-error-boundary";
 
 
 
@@ -17,8 +17,10 @@ import Trending from "./Trending";
 
 function Home() { 
 
+  const { showBoundary } = useErrorBoundary();
+
   const dispatch = useDispatch()
- 
+  
   
 
   const {url}:{url:ConfigurationAPI | object} = useSelector((state: RootState) => state.home);
@@ -29,10 +31,10 @@ function Home() {
     fetchDataFromAPI('configuration')
     .then(res => {
       dispatch(getAPIConfiguration(res.images))
-    })
+    }).catch(err => showBoundary(err))
    
-    fetchDataFromAPI(`genre/movie/list`).then(res => dispatch(getGenres(res.genres)))
-    fetchDataFromAPI(`genre/tv/list`).then(res => dispatch(getGenres(res.genres)))
+    fetchDataFromAPI(`genre/movie/list`).then(res => dispatch(getGenres(res.genres))).catch(err => showBoundary(err))
+    fetchDataFromAPI(`genre/tv/list`).then(res => dispatch(getGenres(res.genres))).catch(err => showBoundary(err))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -44,7 +46,7 @@ function Home() {
     <HeroBanner/>
     <ContentWrapper>
         <Popular/>
-        <TopRated/>
+        <TopRated header="Top Rated"/>
         <Trending category="movie"/>
         <Trending category="tv"/>
     </ContentWrapper>

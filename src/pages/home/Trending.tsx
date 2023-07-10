@@ -24,6 +24,7 @@ function Trending({category}: Category) {
     toggle={["Day", "Week"]} 
     loading={loading} data={data as ListsAPI} 
     setSwitchToggle={setSwitchToggle}
+    switchToggle={`${category === 'movie' ? 'movie' : 'tv'}`}
     />
    
   )

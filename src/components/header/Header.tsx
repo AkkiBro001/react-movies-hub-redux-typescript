@@ -4,8 +4,8 @@ import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai'
 import { BiMenu } from "react-icons/bi"
 import { BsFillSunFill, BsFillMoonFill } from "react-icons/bs";
 import styles from "./Header.module.scss"
-import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState, KeyboardEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setTheme } from "../../store/ThemeSlice";
 import { RootState } from "../../store/Store";
@@ -19,6 +19,7 @@ function Header() {
   const searchRef = useRef<HTMLInputElement>(null);
   const theme = useSelector<RootState, boolean>(state => state.theme)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   function updateTheme() {
     if (theme) {
@@ -31,7 +32,7 @@ function Header() {
   updateTheme()
 
   useEffect(() => {
-
+    if(!showSearch) (searchRef.current as HTMLInputElement).value = ""
     const clearTimer = setTimeout(() => {
 
       searchRef.current?.focus()
@@ -54,6 +55,16 @@ function Header() {
       return ()=> window.removeEventListener('scroll', scrollEvent)
   }, [scroll])
 
+  function handleSearch(e:KeyboardEvent<HTMLInputElement>){
+      if(e.key === "Enter"){
+        if(!searchRef.current?.value){
+            return 
+        }
+        navigate(`/search/${searchRef.current?.value}`);
+        setShowSearch(false);
+      }
+  }
+
   
   return (
     <nav className={`${styles.navBar} ${scroll ? "nav-scroll" : ""}`}>
@@ -63,8 +74,8 @@ function Header() {
 
       <div className={`${styles.searchBar}`}>
 
-        <input type="text" ref={searchRef} className={`${showSearch ? 'showSearch' : 'hideSearch'}`} />
-        {showSearch ? <AiOutlineClose className={styles.closeIcon} onClick={() => setShowSearch(false)} /> :
+        <input type="text" ref={searchRef} className={`${showSearch ? 'showSearch' : 'hideSearch'}`} onKeyUp={handleSearch}/>
+        {showSearch ? <AiOutlineClose className={styles.closeIcon} onClick={() => setShowSearch(false)}/> :
           <AiOutlineSearch className={styles.searchIcon}
             onClick={() => { setShowSearch(true); SetShowMobileMenu(false) }}
           />}
@@ -83,7 +94,7 @@ function Header() {
       <div className={styles.menu}>
 
         {!showMobileMenu ? <BiMenu className={styles.menuIcon} onClick={() => { SetShowMobileMenu(true); setShowSearch(false) }} />
-          : <AiOutlineClose onClick={() => { SetShowMobileMenu(false) }} />}
+          : <AiOutlineClose onClick={() => { SetShowMobileMenu(false)}} />}
       </div>
 
 

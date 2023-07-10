@@ -22,6 +22,6 @@ export default async function fetchDataFromAPI (url:string, params?:object){
      })
      return data;
    }catch(err){
-    console.log(err);
+    throw Error("Cannot fetch data from server")
    }
 }
