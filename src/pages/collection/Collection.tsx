@@ -5,9 +5,9 @@ import { AllGenres, ConfigurationAPI, Genres } from "../../constants/TypeGuards"
 import { RootState } from "../../store/Store";
 import { useSelector } from "react-redux";
 import { ListsAPI } from "../../constants/TypeGuards"
-import { useParams } from "react-router-dom";
+import {useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from 'react';
-import Select from 'react-select';
+import Select, { ActionMeta } from 'react-select';
 import { SelectOption } from "../../constants/TypeGuards";
 import InfiniteScroll from "react-infinite-scroll-component";
 import fetchDataFromAPI from "../../utils/API";
@@ -35,14 +35,14 @@ interface SelectedItems {
 
 function Collection() {
 
-
+  
   const [data, setData] = useState<ListsAPI | null>(null);
   const [page, setPage] = useState<number>(1);
   const [sortBy, setSortBy] = useState<null | SelectOption>(null)
   const [genresOpt, setGenresOpt] = useState<SelectOption[]>([])
   const filters = useRef({})
   const { showBoundary } = useErrorBoundary();
-
+  
 
 
   const { type } = useParams()
@@ -96,11 +96,11 @@ function Collection() {
 
 
 
-  const onChange = (selectedItems: { value: string, label: string }, action: { action: string, option: unknown, name: unknown }) => {
-    if (action.name === "sortby") {
+  const onChange = (option: SelectedItems | SelectedItems[] | null, actionMeta: ActionMeta<SelectedItems>) => {
+    if (actionMeta.name === "sortby") {
 
-      if (action.action !== "clear") {
-        (filters.current as Partial<Filters>).sort_by = selectedItems.value
+      if (actionMeta.action !== "clear") {
+        (filters.current as Partial<Filters>).sort_by = (option as SelectedItems).value
 
       } else {
 
@@ -109,15 +109,19 @@ function Collection() {
 
       }
 
-      setSortBy(selectedItems);
+      setSortBy(option as SelectedItems);
     }
 
     
-    if (action.name === "genres") {
-      setGenresOpt(selectedItems as unknown as SelectOption[]);
-      if (action.action !== "clear") {
+    if (actionMeta.name === "genres") {
+      setGenresOpt(option as SelectedItems[]);
+      if (actionMeta.action !== "clear") {
         
-        let genreId: (number[] | string)  = (selectedItems as unknown as SelectedItems[])?.map((g:SelectOption) => (genres?.genres as Genres[]).find(v => v.name === g.value)?.id) as number[];
+        let genreId: string[] | number[] | string = (option as SelectedItems[]).map(v => v.value)
+        genreId = genreId.map(v => {
+          return (genres as AllGenres)?.genres.find(g => g.name === v)
+        }).map(v => v?.id) as number[]
+       
         
         genreId = JSON.stringify(genreId).slice(1, -1);
         (filters.current as Partial<Filters>).with_genres = genreId;

@@ -8,7 +8,7 @@ import LazyLoadImg from "../../components/lazyLoadImg/LazyLoadImg"
 import TopCast from "../../components/topCast/TopCast"
 import TopRated from "../home/TopRated"
 import { useDispatch, useSelector } from "react-redux"
-import { ConfigurationAPI, DeatilPageAPI, Genres } from "../../constants/TypeGuards"
+import { ConfigurationAPI, Credits, DeatilPageAPI, Genres, VideoObj } from "../../constants/TypeGuards"
 import { RootState } from "../../store/Store"
 import { useEffect, useState } from "react"
 import fetchDataFromAPI from "../../utils/API"
@@ -23,7 +23,7 @@ import { useErrorBoundary } from "react-error-boundary";
 import VideoPopUp from "../../components/videoPopup/VideoPopUp"
 
 const Details = () => {
-
+  
   const dispatch = useDispatch()
   
   const [show, setShow] = useState<boolean>(false)
@@ -36,6 +36,7 @@ const Details = () => {
   const base_url:string = (url as ConfigurationAPI).secure_base_url + "original";
 
   useEffect(()=>{
+    
     if(url && (url as ConfigurationAPI).secure_base_url ) return;
     fetchDataFromAPI('configuration')
     .then(res => {
@@ -46,10 +47,13 @@ const Details = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(()=>{
+    window.scroll(0, 0);
+  },[params.id])
   
 
   const {data}:{data: unknown | Partial<DeatilPageAPI>} = useFetch(`${params.type}/${params.id}`)
-  const {data: castCrew}:{data: unknown} = useFetch(`${params.type}/${params.id}/credits`)
+  const {data: castCrew}  = useFetch(`${params.type}/${params.id}/credits`)
   const {data: video}:{data: unknown} = useFetch(`${params.type}/${params.id}/videos`)
   
 
@@ -59,12 +63,15 @@ const Details = () => {
   const backDropImage = (data as Partial<DeatilPageAPI>)?.backdrop_path ? (base_url + (data as Partial<DeatilPageAPI>)?.backdrop_path) : HeroPreview;
   const posterImage = (data as Partial<DeatilPageAPI>)?.poster_path ? (base_url + (data as Partial<DeatilPageAPI>)?.poster_path) : NoPoster
   
-  if(!data){
+  if(!data || !castCrew || !video){
     return null
   }
 
   
-
+  type VideoRes = {
+    id: number,
+    results: VideoObj[]
+  }
   
 
   const title = (data as Partial<DeatilPageAPI>).original_title || (data as Partial<DeatilPageAPI>).original_name
@@ -74,15 +81,15 @@ const Details = () => {
   const status = (data as Partial<DeatilPageAPI>).status || "N/A"
   const release_date = dayjs((data as Partial<DeatilPageAPI>)?.release_date).format("MMM D, YYYY") || "N/A"
   const runtime =  toHoursAndMinutes((data as Partial<DeatilPageAPI>).runtime as number) || toHoursAndMinutes((data as Partial<DeatilPageAPI>).episode_run_time?.reduce((c,v)=>c+=v) as number)
-  const videoKey = video?.results[0]?.key || null;
+  const videoKey = (video as VideoRes).results[0]?.key || null;
 
-  const Directors = [...new Set(castCrew?.crew.filter(crw => crw.job.includes("Director")).map(obj => obj.name))].slice(0,3)
-  const Writer = [...new Set(castCrew?.crew.filter(crw => crw.department === "Writing").map(obj => obj.name))].slice(0,3)
+  const Directors = [...new Set(((castCrew as unknown as Credits).crew).filter(crw => (crw.job as string).includes("Director")).map(obj => obj.name))].slice(0,3)
+  const Writer = [...new Set((castCrew as unknown as Credits).crew.filter(crw => crw.department === "Writing").map(obj => obj.name))].slice(0,3)
 
   
   return (
     <>
-    <VideoPopUp show={show} setShow={setShow} videoId={videoKey}/>
+    <VideoPopUp show={show} setShow={setShow} videoId={videoKey as string}/>
     <div className={styles.detailContainer}>
       <div className={styles.backDropImage}>
         <img src={backDropImage} alt="" />
@@ -153,7 +160,7 @@ const Details = () => {
           </header>
 
 
-          <TopCast imgBaseURL={base_url} data={castCrew?.cast}/>
+          <TopCast imgBaseURL={base_url} data={(castCrew as unknown as Credits).cast}/>
           <TopRated header="Similar"/>
           <TopRated header="Recommendations"/>
         </ContentWrapper>

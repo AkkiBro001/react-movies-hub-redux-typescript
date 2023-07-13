@@ -1,4 +1,4 @@
-import {  useState, Dispatch, SetStateAction, useEffect } from "react"
+import {  useState } from "react"
 import CarouselContainer from "../../components/CarouselContainer/CarouselContainer"
 import {ListsAPI } from "../../constants/TypeGuards"
 import useFetch from "../../hooks/useFetch"

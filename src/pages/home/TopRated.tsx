@@ -17,7 +17,7 @@ function TopRated({header}:Prop) {
     const {data, loading}:{data:ListsAPI | unknown, loading: boolean} = useFetch(FetchURL)
     // const {data: similer}:{data: unknown} = useFetch(`${params.type}/${params.id}/similar`)
 
-    if(!data || (data?.results as DetailsAPI[]).length === 0){
+    if(!data || ((data as ListsAPI).results as DetailsAPI[]).length === 0){
       return null
     }
 

@@ -3,11 +3,11 @@ import styles from "./TopCast.module.scss";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import avtar from "../../assets/avatar.png";
-import { CastObj } from "../../constants/TypeGuards";
+import { CastCrew } from "../../constants/TypeGuards";
 
 interface Cast {
     imgBaseURL: string,
-    data: CastObj[]
+    data: CastCrew[]
 }
 
 
