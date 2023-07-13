@@ -7,7 +7,7 @@ import ToggleButton from "../toggleButton/ToggleButton";
 import { ConfigurationAPI, ListsAPI } from "../../constants/TypeGuards";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/Store";
-import Skeleton from '../skeleton/Skeleton';
+
 import NoPoster from "../../assets/no-poster.png";
 import { useParams } from 'react-router-dom';
 
@@ -61,6 +61,10 @@ const responsive = {
   }
 };
 
+if(!data){
+  return null;
+}
+
 
 return (
 <div className={styles.carouselContainer}>
@@ -77,18 +81,7 @@ removeArrowOnDeviceType={["tablet", "mobile"]}
     
     loading ? 
     (
-    <>
-    <Skeleton/>
-    <Skeleton/>
-    <Skeleton/>
-    <Skeleton/>
-    <Skeleton/>
-    <Skeleton/>
-    <Skeleton/>
-    <Skeleton/>
-    <Skeleton/>
-    <Skeleton/>
-    </>
+    null
     ) 
     : 
     ( data?.results?.map(list => {

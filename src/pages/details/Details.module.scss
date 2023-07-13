@@ -92,6 +92,7 @@
                     .genres{
                         display: flex;
                         gap: 0.5em;
+                        flex-wrap: wrap;
                         span{
                             background-color: var(--genres-bg);
                             color: var(--genres-text);

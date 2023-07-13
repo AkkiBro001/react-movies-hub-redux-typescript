@@ -48,7 +48,10 @@ const Details = () => {
   }, [])
 
   useEffect(()=>{
-    window.scroll(0, 0);
+    setTimeout(()=>{
+
+      window.scroll(0, 0);
+    },800)
   },[params.id])
   
 
