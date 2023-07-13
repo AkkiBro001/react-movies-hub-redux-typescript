@@ -96,7 +96,7 @@ function Collection() {
 
 
 
-  const onChange = (option: SelectedItems | SelectedItems[] | null, actionMeta: ActionMeta<SelectedItems>) => {
+  const onChange = (option: SelectedItems | readonly SelectedItems[] | null, actionMeta: ActionMeta<SelectedItems>) => {
     if (actionMeta.name === "sortby") {
 
       if (actionMeta.action !== "clear") {

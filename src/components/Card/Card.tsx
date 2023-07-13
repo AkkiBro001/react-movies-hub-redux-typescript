@@ -2,10 +2,13 @@ import styles from "./Card.module.scss";
 import LazyLoadImg from "../lazyLoadImg/LazyLoadImg";
 import Rating from "../Rating/Rating";
 import { Genres } from "../../constants/TypeGuards";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/Store";
 import { useNavigate, useParams } from "react-router-dom";
-
+import { useEffect } from "react";
+import fetchDataFromAPI from "../../utils/API";
+import { getGenres as GenresStore } from "../../store/HomeSlice";
+import { useErrorBoundary } from "react-error-boundary";
 
 interface Props {
     id: number
@@ -23,13 +26,19 @@ interface Props {
 
 function Card({imgURL, title, rating, genre_ids, clsName, id, mediaType}: Props) {
 const navigate = useNavigate()
+const { showBoundary } = useErrorBoundary();
 const genres: Genres[] = useSelector((state: RootState) => state.home.genres)
 const getGenres = genre_ids ? genre_ids.map(id => genres?.find(val => val.id === id)?.name).slice(0,3) : undefined
-
+const dispatch = useDispatch()
+    useEffect(()=>{
+        fetchDataFromAPI(`genre/movie/list`).then(res => dispatch(GenresStore(res.genres))).catch(err => showBoundary(err))
+        fetchDataFromAPI(`genre/tv/list`).then(res => dispatch(GenresStore(res.genres))).catch(err => showBoundary(err))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
    const {type, query} = useParams()  
    
-    
+
   return (
     
 
